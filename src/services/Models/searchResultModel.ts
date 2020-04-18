@@ -1,0 +1,21 @@
+export interface searchResultModel {
+    PinCount: string,
+    PackageDescription: string,
+    SMD: string,
+    Color: string,
+    PartDescription: string,
+    Manufacturer: string,
+    MPN: string,
+    DatasheetURLs: string[],
+    OctopartURL: string,
+    Resistance: string,
+    Value: string,
+    Power: string,
+    Voltage: string,
+    TC: string,
+    Tolerance: string,
+    Category: string,
+    ImageURL: string,
+    ROHS: string,
+    UID: string
+}
