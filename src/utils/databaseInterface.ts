@@ -1,9 +1,11 @@
 import {sqlQuery} from "./database";
 import {componentModel} from "../services/Models/componentModel";
 import {supplierModel} from "../services/Models/supplierModel";
-import {createConnection} from "typeorm";
+import {Connection, createConnection} from "typeorm";
 import {Component} from "../entities/Component";
+import {Supplier} from "../entities/Supplier";
 
+let connection: Connection;
 
 function handleResult(err: any, res: any) {
     console.log("Callback :)");
@@ -15,21 +17,25 @@ function handleResult(err: any, res: any) {
 export async function connectToDB() {
     // createConnection method will automatically read connection options
     // from your ormconfig file or environment variables
-    const connection = await createConnection();
+    if (connection !== undefined) {
+        if (connection.isConnected == false) {
+            connection = await createConnection();
+        }
+    } else {
+        connection = await createConnection();
+    }
     console.log("connected");
-    const firstUser = await connection
-        .getRepository(Component)
-        .createQueryBuilder("component")
-        .getOne();
-    console.log(firstUser);
+    await getSupplier();
 }
 
-export function getSupplier(): supplierModel[] {
-    let suppliers: supplierModel[] = [];
 
-    sqlQuery("SELECT * FROM supplier", handleResult);
-
-    return suppliers;
+export async function getSupplier(): Promise<Supplier[]> {
+    const supplier = await connection
+        .getRepository(Supplier)
+        .createQueryBuilder("supplier")
+        .getMany();
+    console.log(supplier);
+    return supplier;
 }
 
 export function addComponent(component: componentModel) {
