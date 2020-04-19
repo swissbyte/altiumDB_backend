@@ -20,8 +20,12 @@ import {Subclass} from "../../entities/Subclass";
 import {Schemalibpath} from "../../entities/Schemalibpath";
 import {Footprintpath} from "../../entities/Footprintpath";
 import {State} from "../../entities/State";
+import dotenv from "dotenv";
+import {getZipContent} from "../../utils/ziputil";
+
 
 export default [
+
     {
         path: "/api/v1/core/supplier",
         method: "get",
@@ -469,6 +473,21 @@ export default [
         handler: [
             async (req: Request, res: Response) => {
                 await updateData(Class, req.body);
+                res.status(200).send();
+            }
+        ],
+    },
+
+
+    {
+        path: "/api/v1/core/footprintlib",
+        method: "get",
+        handler: [
+            async ({query}: Request, res: Response) => {
+                dotenv.config({path: '.env.production'});
+                const path = <string>process.env.FOOTPRINTLIB_PATH;
+                getZipContent(path + "\\" + query.filename);
+
                 res.status(200).send();
             }
         ],

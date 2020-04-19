@@ -5,7 +5,7 @@ import routes from "./services";
 import middleware from "./middleware";
 import "reflect-metadata";
 
-import {connectToDB} from "./utils/database"
+//import {connectToDB} from "./utils/database"
 import {execute} from "./utils/launcher";
 import dotenv from "dotenv";
 
@@ -20,7 +20,7 @@ const path = <string>process.env.MYSQLD_PATH;
 //Starting mysqld service.
 execute('mysqld.exe', [], path);
 
-connectToDB();
+//connectToDB();
 
 console.log("Launched");
 
