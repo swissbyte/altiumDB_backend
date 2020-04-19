@@ -4,7 +4,7 @@ import {
     getManufacturerByName
 } from "../../utils/databaseInterface";
 import {Manufacturer} from "../../entities/Manufacturer";
-import {addManufacturer, getManufacturers, removeManufacturer, updateManufacturer} from "./manufacturerController";
+import {addManufacturer, getManufacturers, removeManufacturer, updateManufacturer} from "./coreController";
 
 export default [
     {

@@ -1,4 +1,4 @@
 import searchRoutes from "./search/routes";
-import manufacturerRoutes from "./manufacturer/routes";
+import coreRoutes from "./core/routes";
 
-export default [...searchRoutes, ...manufacturerRoutes];
+export default [...searchRoutes, ...coreRoutes];
