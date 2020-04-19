@@ -2,6 +2,7 @@ import {sqlQuery} from "./database";
 import {componentModel} from "../services/Models/componentModel";
 import {supplierModel} from "../services/Models/supplierModel";
 import {createConnection} from "typeorm";
+import {Component} from "../entities/Component";
 
 
 function handleResult(err: any, res: any) {
@@ -16,11 +17,11 @@ export async function connectToDB() {
     // from your ormconfig file or environment variables
     const connection = await createConnection();
     console.log("connected");
-    /*    const firstUser = await connection
-            .getRepository(User)
-            .createQueryBuilder("user")
-            .where("user.id = :id", { id: 1 })
-            .getOne();*/
+    const firstUser = await connection
+        .getRepository(Component)
+        .createQueryBuilder("component")
+        .getOne();
+    console.log(firstUser);
 }
 
 export function getSupplier(): supplierModel[] {

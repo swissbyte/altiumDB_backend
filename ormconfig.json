@@ -10,7 +10,7 @@
     "schema": "",
     "synchronize": false,
     "entities": [
-      "entities/*.js"
+      "dist/entities/*.js"
     ]
   }
 ]
