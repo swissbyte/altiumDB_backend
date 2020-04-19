@@ -1,10 +1,6 @@
-import {sqlQuery} from "./database";
-import {componentModel} from "../services/Models/componentModel";
 import {supplierModel} from "../services/Models/supplierModel";
 import {Connection, createConnection} from "typeorm";
-import {Component} from "../entities/Component";
 import {Supplier} from "../entities/Supplier";
-import {Attribute} from "../entities/Attribute";
 
 let connection: Connection;
 
@@ -18,6 +14,7 @@ function handleResult(err: any, res: any) {
 export async function connectToDB() {
     // createConnection method will automatically read connection options
     // from your ormconfig file or environment variables
+    console.log("Check connection");
     if (connection !== undefined) {
         if (connection.isConnected == false) {
             connection = await createConnection();
@@ -25,8 +22,14 @@ export async function connectToDB() {
     } else {
         connection = await createConnection();
     }
+}
+
+
+export async function doTest() {
     console.log("connected");
-    await getSupplier();
+    await getSuppliers();
+    return getSupplierByName("RS-Online");
+
 }
 
 /*
@@ -59,32 +62,51 @@ export async function addComponent(comp: componentModel) {
         tc: comp.TC,
         tolerance: comp.Tolerance,
         value: comp.Value,
-        voltage: comp.Voltage,
-
-
+        voltage: comp.Voltage
     }
 
-    let tmpComp: Component = {
-        creationDate: Date().toString(),
-        attributeId
+    /!*    let tmpComp: Component = {
+            creationDate: Date().toString(),
+            attributeId
+        }*!/
+
+
+    /!*    await connection.createQueryBuilder()
+            .insert()
+            .into(Component)
+            .values([
+                {creationDate: Date().toString, lastName: "Saw"}
+            ])
+            .execute();*!/
+}*/
+
+
+export async function getSupplierByName(name: string): Promise<Supplier> {
+    const suppliers = await getSuppliers();
+    //console.log((suppliers));
+    //console.log("Here they are:");
+    const matchedSuppliers = suppliers.filter((value, index) => value.name == name);
+
+    console.log("Found suppliers: " + matchedSuppliers.length);
+    //console.log(matchedSuppliers[0]);
+    if (matchedSuppliers.length >= 1) {
+        console.log("Return matched");
+        return matchedSuppliers[0];
     }
-
-
-    await connection.createQueryBuilder()
-        .insert()
-        .into(Component)
-        .values([
-            {creationDate: Date().toString, lastName: "Saw"}
-        ])
-        .execute();
+    console.log("No one matched");
+    return new Supplier();
 }
- */
 
-export async function getSupplier(): Promise<Supplier[]> {
+export async function getSuppliers(): Promise<Supplier[]> {
     const supplier = await connection
         .getRepository(Supplier)
         .createQueryBuilder("supplier")
         .getMany();
-    console.log(supplier);
+    //console.log(supplier);
+    const thisOne: Supplier[] = supplier.filter((value, index) => value.name == "RS-Online");
+    //console.log(thisOne);
+
     return supplier;
 }
+
+
