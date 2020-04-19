@@ -1,6 +1,7 @@
 import {supplierModel} from "../services/Models/supplierModel";
 import {Connection, createConnection} from "typeorm";
 import {Supplier} from "../entities/Supplier";
+import {Manufacturer} from "../entities/Manufacturer";
 
 let connection: Connection;
 
@@ -11,7 +12,7 @@ function handleResult(err: any, res: any) {
     console.log((<supplierModel[]>res)[0].Name);
 }
 
-export async function connectToDB() {
+export async function connectToDB(): Promise<Connection> {
     // createConnection method will automatically read connection options
     // from your ormconfig file or environment variables
     console.log("Check connection");
@@ -22,6 +23,11 @@ export async function connectToDB() {
     } else {
         connection = await createConnection();
     }
+    return connection;
+}
+
+export function getConnection(): Connection {
+    return connection;
 }
 
 
@@ -80,15 +86,22 @@ export async function addComponent(comp: componentModel) {
             .execute();*!/
 }*/
 
+export async function getManufacturerByName(name: string): Promise<Manufacturer> {
+    const manufacturers = await getSuppliers();
+    const matchedManufacturers = manufacturers.filter((value, index) => value.name == name);
+    console.log("Found manufacturers: " + matchedManufacturers.length);
+    if (matchedManufacturers.length >= 1) {
+        console.log("Return matched");
+        return matchedManufacturers[0];
+    }
+    console.log("No one matched");
+    return new Manufacturer();
+}
 
 export async function getSupplierByName(name: string): Promise<Supplier> {
     const suppliers = await getSuppliers();
-    //console.log((suppliers));
-    //console.log("Here they are:");
     const matchedSuppliers = suppliers.filter((value, index) => value.name == name);
-
     console.log("Found suppliers: " + matchedSuppliers.length);
-    //console.log(matchedSuppliers[0]);
     if (matchedSuppliers.length >= 1) {
         console.log("Return matched");
         return matchedSuppliers[0];
@@ -102,10 +115,6 @@ export async function getSuppliers(): Promise<Supplier[]> {
         .getRepository(Supplier)
         .createQueryBuilder("supplier")
         .getMany();
-    //console.log(supplier);
-    const thisOne: Supplier[] = supplier.filter((value, index) => value.name == "RS-Online");
-    //console.log(thisOne);
-
     return supplier;
 }
 

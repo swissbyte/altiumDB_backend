@@ -1,6 +1,12 @@
 import {Request, Response} from "express";
 import {getComponentByMPN, getPlacesByName} from "./searchController";
-import {connectToDB, getSupplierByName, getSuppliers} from "../../utils/databaseInterface";
+import {
+    connectToDB,
+    getManufacturerByName,
+    getSupplierByName,
+    getSuppliers
+} from "../../utils/databaseInterface";
+import {Manufacturer} from "../../entities/Manufacturer";
 
 export default [
     {
@@ -30,11 +36,11 @@ export default [
         method: "get",
         handler: [
             async ({query}: Request, res: Response) => {
-                res.status(200).json(await getSuppliers());
+                if (query.name) res.status(200).json(await getSupplierByName(<string>query.name));
+                else res.status(200).json(await getSuppliers());
             }
-        ]
+        ],
     },
-
     {
         path: "/test",
         method: "get",
