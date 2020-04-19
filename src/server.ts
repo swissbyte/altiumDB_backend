@@ -3,6 +3,7 @@ import express from "express";
 import {applyMiddleware, applyRoutes} from "./utils";
 import routes from "./services";
 import middleware from "./middleware";
+import "reflect-metadata";
 
 import {connectToDB} from "./utils/database"
 import {execute} from "./utils/launcher";
@@ -17,7 +18,7 @@ applyRoutes(routes, router);
 const path = <string>process.env.MYSQLD_PATH;
 
 //Starting mysqld service.
-execute('mysqld.exe', [], path, connectToDB);
+execute('mysqld.exe', [], path);
 
 //connectToDB();
 

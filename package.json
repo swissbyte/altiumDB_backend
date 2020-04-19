@@ -21,12 +21,12 @@
     "dotenv": "^8.2.0",
     "express": "^5.0.0-alpha.8",
     "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "tsc-watch": "^4.2.3",
+    "typeorm": "^0.2.24",
     "typescript": "^3.8.3"
   },
-  "devDependencies": {
-    "mysql2": "^2.1.0"
-  }
+  "devDependencies": {}
 }
