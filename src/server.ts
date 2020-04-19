@@ -20,7 +20,7 @@ const path = <string>process.env.MYSQLD_PATH;
 //Starting mysqld service.
 execute('mysqld.exe', [], path);
 
-//connectToDB();
+connectToDB();
 
 console.log("Launched");
 
