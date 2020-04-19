@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import {getComponentByMPN, getPlacesByName} from "./searchController";
+import {getComponentByID, getComponentByMPN, getPlacesByName} from "./searchController";
 import {
     connectToDB,
     getManufacturerByName,
@@ -10,18 +10,25 @@ import {Manufacturer} from "../../entities/Manufacturer";
 
 export default [
     {
-        path: "/api/v1/search/place",
+        path: "/api/v1/search/manufacturer",
         method: "get",
         handler: [
             async ({query}: Request, res: Response) => {
-                const result = await getPlacesByName(<string>query.q);
-                res.status(200).send(result);
+                res.status(200).json(await getManufacturerByName(<string>query.q));
             }
         ]
     },
-
     {
-        path: "/api/v1/search/component",
+        path: "/api/v1/match/component",
+        method: "get",
+        handler: [
+            async ({query}: Request, res: Response) => {
+                res.status(200).json(await getComponentByID(<number><unknown>query.id));
+            }
+        ]
+    },
+    {
+        path: "/api/v1/search/octopart",
         method: "get",
         handler: [
             async ({query}: Request, res: Response) => {
@@ -30,25 +37,15 @@ export default [
             }
         ]
     },
-
     {
-        path: "/api/v1/core/supplier",
+        path: "/api/v1/search/supplier",
         method: "get",
         handler: [
             async ({query}: Request, res: Response) => {
-                if (query.name) res.status(200).json(await getSupplierByName(<string>query.name));
-                else res.status(200).json(await getSuppliers());
+                res.status(200).json(await getSupplierByName(<string>query.q));
             }
         ],
-    },
-    {
-        path: "/test",
-        method: "get",
-        handler: [
-            async ({query}: Request, res: Response) => {
-                res.status(200).send(connectToDB());
-            }
-        ]
     }
+
 ];
 

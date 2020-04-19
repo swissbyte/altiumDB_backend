@@ -1,6 +1,8 @@
 import {getCategoryByUID, getComponent, getComponentByUID, getPlaces} from "./providers/octopart";
 import {searchResultModel} from "../Models/searchResultModel";
 import {octopartQueryResponseModel} from "./octopartQueryResponseModel";
+import {Component} from "../../entities/Component";
+import {getConnection} from "../../utils/databaseInterface";
 
 export const getPlacesByName = async (q: string) => {
     if (q.length < 3) {
@@ -61,6 +63,17 @@ function getTolerance(item: any): string {
 
     return getSpecProperty(item, "resistance_tolerance") +
         getSpecProperty(item, "capacitance_tolerance")
+}
+
+
+export async function getComponentByID(id: number): Promise<Component> {
+    const data = await getConnection()
+        .getRepository(Component)
+        .createQueryBuilder()
+        .where("id = :id", {id: id})
+        .getMany();
+    if (data.length == 0) return new Component();
+    return data[0];
 }
 
 export async function getComponentByMPN(q: any): Promise<searchResultModel[]> {

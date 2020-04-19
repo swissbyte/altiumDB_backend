@@ -101,12 +101,9 @@ export async function getManufacturerByName(name: string): Promise<Manufacturer>
 export async function getSupplierByName(name: string): Promise<Supplier> {
     const suppliers = await getSuppliers();
     const matchedSuppliers = suppliers.filter((value, index) => value.name == name);
-    console.log("Found suppliers: " + matchedSuppliers.length);
     if (matchedSuppliers.length >= 1) {
-        console.log("Return matched");
         return matchedSuppliers[0];
     }
-    console.log("No one matched");
     return new Supplier();
 }
 
