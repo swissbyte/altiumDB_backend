@@ -1,10 +1,15 @@
 import {Request, Response} from "express";
 import {
-    connectToDB,
     getManufacturerByName
 } from "../../utils/databaseInterface";
 import {Manufacturer} from "../../entities/Manufacturer";
-import {addManufacturer, getManufacturers, removeManufacturer, updateManufacturer} from "./coreController";
+import {
+    addData,
+    getData,
+    removeData,
+    updateData
+} from "./coreController";
+import {Supplier} from "../../entities/Supplier";
 
 export default [
     {
@@ -13,11 +18,10 @@ export default [
         handler: [
             async ({query}: Request, res: Response) => {
                 if (query.name) res.status(200).json(await getManufacturerByName(<string>query.name));
-                else res.status(200).json(await getManufacturers());
+                else res.status(200).json(await getData(Manufacturer));
             }
         ],
     },
-
     {
         path: "/api/v1/core/manufacturer",
         method: "post",
@@ -25,7 +29,7 @@ export default [
             async (req: Request, res: Response) => {
                 //await addManufacturer(query);
                 console.log(req.body);
-                await addManufacturer(req.body);
+                await addData(Manufacturer, req.body);
                 res.status(200).send();
             }
         ],
@@ -37,7 +41,7 @@ export default [
             async (req: Request, res: Response) => {
                 //await addManufacturer(query);
                 console.log(req.body);
-                await removeManufacturer(req.body);
+                await removeData(Manufacturer, req.body);
                 res.status(200).send();
             }
         ],
@@ -49,7 +53,7 @@ export default [
             async (req: Request, res: Response) => {
                 //await addManufacturer(query);
                 console.log(req.body);
-                await updateManufacturer(req.body);
+                await updateData(Manufacturer, req.body);
                 res.status(200).send();
             }
         ],

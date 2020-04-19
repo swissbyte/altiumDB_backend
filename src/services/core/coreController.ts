@@ -2,6 +2,41 @@ import {Manufacturer} from "../../entities/Manufacturer";
 import {getConnection} from "../../utils/databaseInterface";
 
 
+export async function getData(forRepo: any): Promise<any[]> {
+    const data = await getConnection()
+        .getRepository(forRepo)
+        .createQueryBuilder()
+        .getMany();
+    return data;
+}
+
+export async function addData(forRepo: any, data: any) {
+    await getConnection().createQueryBuilder()
+        .insert()
+        .into(forRepo)
+        .values([data])
+        .execute();
+}
+
+export async function removeData(forRepo: any, data: any) {
+    await getConnection().createQueryBuilder()
+        .delete()
+        .from(forRepo)
+        .where("id = :id", {id: data.id})
+        .execute();
+}
+
+export async function updateData(forRepo: any, data: any) {
+    await getConnection().createQueryBuilder()
+        .update(forRepo)
+        .set({name: data.name})
+        .where("id = :id", {id: data.id})
+        .execute();
+}
+
+
+////////// Manufacturere
+
 export async function getManufacturers(): Promise<Manufacturer[]> {
     const manufacturer = await getConnection()
         .getRepository(Manufacturer)
