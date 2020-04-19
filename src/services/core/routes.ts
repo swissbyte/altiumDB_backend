@@ -5,7 +5,7 @@ import {
 import {Manufacturer} from "../../entities/Manufacturer";
 import {
     addData,
-    getData,
+    getData, getDataByID,
     removeData,
     updateData
 } from "./coreController";
@@ -23,6 +23,9 @@ import {State} from "../../entities/State";
 import dotenv from "dotenv";
 import {getZipContent} from "../../utils/ziputil";
 
+interface cdfDirectories {
+    Name: string;
+}
 
 export default [
 
@@ -480,15 +483,26 @@ export default [
 
 
     {
+        path: "/api/v1/match/footprintlib",
+        method: "get",
+        handler: [
+            async ({query}: Request, res: Response) => {
+                dotenv.config({path: '.env.production'});
+                const path = <string>process.env.FOOTPRINTLIB_PATH;
+                const footprint: any[] = await getDataByID(Footprintpath, <number><unknown>query.id);
+                res.status(200).json(<cdfDirectories[]><unknown>getZipContent(path + "\\" + <Footprintpath><unknown>footprint[0].footprintPath));
+            }
+        ],
+    },
+
+    {
         path: "/api/v1/core/footprintlib",
         method: "get",
         handler: [
             async ({query}: Request, res: Response) => {
                 dotenv.config({path: '.env.production'});
                 const path = <string>process.env.FOOTPRINTLIB_PATH;
-                getZipContent(path + "\\" + query.filename);
-
-                res.status(200).send();
+                res.status(200).json(<cdfDirectories[]><unknown>getZipContent(path + "\\" + query.filename));
             }
         ],
     },

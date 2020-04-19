@@ -10,6 +10,15 @@ export async function getData(forRepo: any): Promise<any[]> {
     return data;
 }
 
+export async function getDataByID(forRepo: any, id: number): Promise<any[]> {
+    const data = await getConnection()
+        .getRepository(forRepo)
+        .createQueryBuilder()
+        .where("id = :id", {id: id})
+        .getMany();
+    return data;
+}
+
 export async function addData(forRepo: any, data: any) {
     await getConnection().createQueryBuilder()
         .insert()
