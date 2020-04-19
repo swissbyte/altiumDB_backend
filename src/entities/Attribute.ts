@@ -57,8 +57,8 @@ export class Attribute {
     @Column("varchar", {name: "Part Description", nullable: true, length: 255})
     partDescription: string | null | undefined;
 
-    @Column("varchar", {name: "Manufacturer1", nullable: true, length: 255})
-    manufacturer1: string | null | undefined;
+    @Column("int", {name: "Manufacturer1ID"})
+    manufacturer1Id: number | undefined;
 
     @Column("varchar", {name: "Manufacturer1 MPN", nullable: true, length: 255})
     manufacturer1Mpn: string | null | undefined;
@@ -66,8 +66,8 @@ export class Attribute {
     @Column("varchar", {name: "Manufacturer1 ComponentHeight", nullable: true, length: 255})
     manufacturer1ComponentHeight: string | null | undefined;
 
-    @Column("varchar", {name: "Manufacturer2", nullable: true, length: 255})
-    manufacturer2: string | null | undefined;
+    @Column("int", {name: "Manufacturer2ID"})
+    manufacturer2Id: number | undefined;
 
     @Column("varchar", {name: "Manufacturer2 MPN", nullable: true, length: 255})
     manufacturer2Mpn: string | null | undefined;

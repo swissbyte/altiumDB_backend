@@ -29,6 +29,8 @@ export interface componentModel {
     Value: string,
     Power: string,
     Voltage: string,
+    TC: string,
+    Tolerance: string,
     MPN1Supplier1: string,
     MPN1Supplier1OrderingCode: string,
     MPN1Supplier2: string,
