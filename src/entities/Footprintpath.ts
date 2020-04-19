@@ -4,11 +4,9 @@ import { Attribute } from "./Attribute";
 @Entity("footprintpath", { schema: "component" })
 export class Footprintpath {
   @PrimaryGeneratedColumn({ type: "int", name: "ID" })
-  id: number;
+  id: number | undefined;
 
   @Column("varchar", { name: "footprintPath", length: 255 })
-  footprintPath: string;
+  footprintPath: string | undefined;
 
-  @OneToMany(() => Attribute, (attribute) => attribute.footprintPath)
-  attributes: Attribute[];
 }

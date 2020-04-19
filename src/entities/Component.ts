@@ -19,58 +19,30 @@ import { State } from "./State";
 @Entity("component", { schema: "component" })
 export class Component {
   @PrimaryGeneratedColumn({ type: "int", name: "ID" })
-  id: number;
+  id: number | undefined;
 
   @Column("varchar", { name: "Part Number", unique: true, length: 255 })
-  partNumber: string;
+  partNumber: string | undefined;
 
   @Column("int", { name: "AttributeID" })
-  attributeId: number;
+  attributeId: number | undefined;
 
   @Column("int", { name: "ComponentClassID" })
-  componentClassId: number;
+  componentClassId: number | undefined;
 
   @Column("int", { name: "StateID" })
-  stateId: number;
+  stateId: number | undefined;
 
   @Column("int", { name: "AuthorID" })
-  authorId: number;
+  authorId: number | undefined;
 
   @Column("varchar", { name: "CreationDate", nullable: true, length: 255 })
-  creationDate: string | null;
+  creationDate: string | null | undefined;
 
   @Column("varchar", {
     name: "LatestRevisionDate",
     nullable: true,
     length: 255,
   })
-  latestRevisionDate: string | null;
-
-  @ManyToOne(() => Attribute, (attribute) => attribute.components, {
-    onDelete: "CASCADE",
-    onUpdate: "RESTRICT",
-  })
-  @JoinColumn([{ name: "AttributeID", referencedColumnName: "id" }])
-  attribute: Attribute;
-
-  @ManyToOne(() => Author, (author) => author.components, {
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT",
-  })
-  @JoinColumn([{ name: "AuthorID", referencedColumnName: "id" }])
-  author: Author;
-
-  @ManyToOne(() => Subclass, (subclass) => subclass.components, {
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT",
-  })
-  @JoinColumn([{ name: "ComponentClassID", referencedColumnName: "id" }])
-  componentClass: Subclass;
-
-  @ManyToOne(() => State, (state) => state.components, {
-    onDelete: "RESTRICT",
-    onUpdate: "RESTRICT",
-  })
-  @JoinColumn([{ name: "StateID", referencedColumnName: "id" }])
-  state: State;
+  latestRevisionDate: string | null | undefined;
 }

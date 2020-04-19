@@ -8,23 +8,12 @@ import {Class} from './Class'
 export  class Case {
 
 @PrimaryGeneratedColumn({ type:"int", name:"ID" })
-id:number;
+id:number | undefined;
 
 @Column("varchar",{ name:"Casename",nullable:true,length:255 })
-casename:string | null;
+casename:string | null | undefined;
 
 @Column("int",{ name:"ComponentClassID" })
-componentClassId:number;
-
-@OneToMany(()=>Attribute,attribute=>attribute.case)
-
-
-attributes:Attribute[];
-
-@ManyToOne(()=>Class,class=>class.cases,{ onDelete:"RESTRICT",onUpdate:"RESTRICT" })
-@JoinColumn([{ name: "ComponentClassID", referencedColumnName: "id" },
-])
-
-componentClass:Class;
+componentClassId:number | undefined;
 
 }

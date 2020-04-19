@@ -4,11 +4,9 @@ import { Attribute } from "./Attribute";
 @Entity("rohs", { schema: "component" })
 export class Rohs {
   @PrimaryGeneratedColumn({ type: "int", name: "ID" })
-  id: number;
+  id: number | undefined;
 
   @Column("varchar", { name: "State", nullable: true, length: 255 })
-  state: string | null;
+  state: string | null | undefined;
 
-  @OneToMany(() => Attribute, (attribute) => attribute.rohs)
-  attributes: Attribute[];
 }

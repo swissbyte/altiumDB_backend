@@ -4,15 +4,10 @@ import { Supplier } from "./Supplier";
 
 @Entity("state", { schema: "component" })
 export class State {
-  @PrimaryGeneratedColumn({ type: "int", name: "ID" })
-  id: number;
+  @PrimaryGeneratedColumn({type: "int", name: "ID"})
+  id: number | undefined;
 
-  @Column("varchar", { name: "Name", length: 255 })
-  name: string;
+  @Column("varchar", {name: "Name", length: 255})
+  name: string | undefined;
 
-  @OneToMany(() => Component, (component) => component.state)
-  components: Component[];
-
-  @OneToMany(() => Supplier, (supplier) => supplier.state)
-  suppliers: Supplier[];
 }
