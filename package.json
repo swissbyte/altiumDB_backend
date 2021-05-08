@@ -32,7 +32,7 @@
     "request": "^2.88.2",
     "request-promise": "^4.2.5",
     "tsc-watch": "^4.2.3",
-    "typeorm": "^0.2.24",
+    "typeorm": "^0.2.25",
     "typescript": "^3.8.3"
   },
   "devDependencies": {}
